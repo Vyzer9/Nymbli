@@ -1,5 +1,6 @@
 #lang racket
 
-(define (PrintNym msg))
-    (displayln msg)
-    (PrintNym "Olá, Nymbli!")
+(define (PrintNym msg)
+  (displayln msg))
+
+(PrintNym "Hello, Nymbli!")
