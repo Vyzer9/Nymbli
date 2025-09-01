@@ -1,5 +1,6 @@
 #lang racket
 
+
 ;; Representa uma constante literal, tipo número ou string
 (struct nymconst (value) #:transparent)
 

@@ -1,5 +1,6 @@
 #lang racket
 
+
 ;; Expressões Aritméticas
 (struct add (left right) #:transparent)    ; soma
 (struct sub (left right) #:transparent)    ; subtração
