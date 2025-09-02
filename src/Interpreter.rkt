@@ -1,7 +1,8 @@
 #lang racket
 
 (require "syntax/LogicOperations.rkt"
-         "syntax/Conditional.rkt")
+         "syntax/Conditional.rkt"
+         "syntax/Lambda.rkt")
 
 ;; Ambiente global
 (define global-env (make-hash))
@@ -46,14 +47,58 @@
      (displayln val)
      val]
 
-    ;; Expressão não reconhecida
+    ;; nymlambda (função anônima)
+[(and (list? expr) (eq? (first expr) 'nymlambda))
+ (eval-lambda expr env interpret)] ; ✅ novo
+
+
+    ;; Chamada de função
+    [(and (list? expr) (not (member (first expr) '(nymconst PrintNym if + - * / = > < <= >= nymlambda))))
+     (let ([func (interpret (first expr) env)]
+           [args (map (lambda (e) (interpret e env)) (rest expr))])
+       (apply func args))]
+
+    ;; Expressão inválida
     [else (error "Expressão inválida:" expr)]))
 
-;; =======================
-;; Testes
-;; =======================
+;; =====================
+;; Exemplo de Lambda.rkt
+;; =====================
 
-(interpret '(nymconst x 10) global-env)                       ; Define x = 10
-(interpret '(PrintNym x) global-env)                          ; Deve imprimir 10
-(interpret '(PrintNym (+ 2 3)) global-env)                    ; Deve imprimir 5
-(interpret '(PrintNym (if (> x 5) 100 200)) global-env)       ; Deve imprimir 100
+(provide eval-lambda)
+
+(define (eval-lambda expr env)
+  ;; Espera: (nymlambda (params...) body...)
+  (let* ([params (second expr)]
+         [body (cddr expr)])
+    (lambda args
+      (define new-env (for/fold ([acc-env env])
+                                 ([param params]
+                                  [arg args])
+                        (hash-set acc-env param arg)))
+      (define results (map (lambda (e) (interpret e new-env)) body))
+      (if (null? (cdr results))
+          (car results)
+          (last results)))))
+
+;; =====================
+;; Exemplos de uso
+;; =====================
+
+;; Definindo variável
+(interpret '(nymconst x 10) global-env)
+
+;; Printando x (10)
+(interpret '(PrintNym x) global-env)
+
+;; Printando soma (5)
+(interpret '(PrintNym (+ 2 3)) global-env)
+
+;; If simples (100)
+(interpret '(PrintNym (if (> x 5) 100 200)) global-env)
+
+;; Definindo função dobro
+(interpret '(nymconst dobro (nymlambda (x) (* x 2))) global-env)
+
+;; Usando função dobro (20)
+(interpret '(PrintNym (dobro 10)) global-env)
