@@ -1,0 +1,21 @@
+--------------- Expressões/Sintaxe ---------------
+PrintNym  =>  Imprimir 
+nymlet => Meu Let
+nymset => Meu let que possui uma variação
+nymconst => Constante
+func => Função
+forx => For (Loop)
+Operadores matematicos e lógicos
+Arrow => (=>)
+nymlist => Lista
+appendx => Concatenação
+if/else => Condicional
+
+--------------- Métodos  ---------------
+  nymbl-map
+  nymbl-filter
+  nymbl-reduce
+  nymbl-for-each
+  nymbl-any?
+  nymbl-all?
+  nymbl-find
