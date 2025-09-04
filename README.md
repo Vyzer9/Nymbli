@@ -12,6 +12,21 @@
 
 <img width="128" height="128" alt="LogoSemFundo128x128" src="https://github.com/user-attachments/assets/e4eea1c3-f844-4c82-8174-5a44dbb6d7e4" />
 
+---
+
+## 📌 Table of Contents
+
+- [🎯 About Nymbli](#-about-nymbli)
+- [🌐 Website](#-website)
+- [🧰 Technologies](#-technologies)
+- [🏗️ Features and Architecture](#️-features-and-architecture)
+- [⚙️ Usage Instructions](#️-usage-instructions)
+- [📷 Screenshot](#-screenshot)
+- [🤝 Contribution Guidelines](#-contribution-guidelines)
+- [🧾 License](#-license)
+- [📬 Contact](#-contact)
+
+---
 
 ## 🎯 About Nymbli
 **Nymbli** is an open-source programming language created in August 2025, built using **Racket** and **Elixir**.  
@@ -19,6 +34,8 @@ It is an **interpreted**, **imperative** language that features a **functional-s
 
 ## 🌐 WebSite
 The site is currently under maintenance. It will be available soon.
+
+<img width="1903" height="956" alt="image" src="https://github.com/user-attachments/assets/87b73087-170f-46d1-ac6d-77e53c396fb7" />
 
 ---
 
@@ -63,9 +80,16 @@ Nymbli is a modern language designed with a focus on agility, syntactic simplici
 
   ---
 
+## ⚙️ Usage Instructions
+At the moment 04/09/2025 the Language has basic syntax, 100% pure but it does not yet have the advanced, additional methods, etc. We are in development to deliver the beta version of it with at least the essentials for everyone.
+In the meantime, you can give the Fork command, give stars and if you want to report bugs, suggestions and other things that will benefit and grow the language.
+
+---
+
  ## 📷 Screenshot
 
-<img width="1903" height="956" alt="image" src="https://github.com/user-attachments/assets/87b73087-170f-46d1-ac6d-77e53c396fb7" />
+<img width="498" height="119" alt="image" src="https://github.com/user-attachments/assets/ec7fbbf4-4b25-49a8-85e2-30ea49634784" />
+
 
  ## 🤝 Contribution Guidelines
 
@@ -77,7 +101,7 @@ Contributions are welcome, provided they align with the educational and ethical 
 
 ## 🧾 License
 
-This project is licensed under the MIT License.
+This project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 ---
 
