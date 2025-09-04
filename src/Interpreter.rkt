@@ -1,55 +1,68 @@
 #lang racket
 
+(require "AST.rkt")
 
-;; Structs existentes
-(struct func (name params body) #:transparent)
-(struct call (name args) #:transparent)
+(provide interpret make-env)
 
-;; Ambiente global (hash mutável)
-(define env (make-hash))
+;; Cria um ambiente vazio (hash table)
+(define (make-env)
+  (make-hash))
 
-;; Mini interpretador
+;; Busca variável no ambiente, erro se não encontrar
+(define (env-get env key)
+  (hash-ref env key (lambda () (error "Variável não definida:" key))))
+
+;; Atualiza ou adiciona variável no ambiente
+(define (env-set! env key val)
+  (hash-set! env key val))
+
+;; Interpreta uma expressão AST dentro do ambiente
 (define (interpret expr env)
   (cond
-    ;; Literais
-    [(number? expr) expr]
-    
-    ;; Variáveis
-    [(symbol? expr)
-     (hash-ref env expr (lambda () (error "Variável não encontrada:" expr)))]
-    
-    ;; Operações matemáticas
-    [(and (list? expr) (symbol? (first expr))
-          (member (first expr) '(+ - * /)))
-     (apply (eval (first expr))
-            (map (lambda (e) (interpret e env)) (rest expr)))]
-    
+    ;; Literal: retorna seu valor direto
+    [(Literal? expr)
+     (Literal-value expr)]
+
+    ;; Variável: busca valor no ambiente
+    [(Var? expr)
+     (env-get env (Var-name expr))]
+
+    ;; Let: avalia o valor, armazena no ambiente, interpreta o corpo com esse ambiente atualizado
+    [(Let? expr)
+     (let ([val (interpret (Let-value expr) env)])
+       (env-set! env (Let-name expr) val)
+       (interpret (Let-body expr) env))]
+
+    ;; If: avalia a condição, interpreta então ou else conforme resultado
+    [(If? expr)
+     (if (interpret (If-cond expr) env)
+         (interpret (If-then expr) env)
+         (interpret (If-else expr) env))]
+
+    ;; Função: simplesmente retorna a struct da função para aplicação posterior
+    [(Func? expr)
+     expr]
+
     ;; Chamada de função
-    [(call? expr)
-     (define f (hash-ref env (call-name expr)
-                         (lambda () (error "Função não encontrada:" (call-name expr)))))
-     (define arg-vals (map (lambda (e) (interpret e env)) (call-args expr)))
-     (define new-env
-       (for/fold ([acc env])
-                 ([param (func-params f)]
-                  [arg arg-vals])
-         (hash-set acc param arg)))
-     (interpret (func-body f) new-env)]
+    [(Call? expr)
+     (let* ([func (interpret (Call-fn expr) env)]
+            [arg (interpret (Call-arg expr) env)])
+       (cond
+         ;; Se for uma função definida na AST, cria um novo ambiente para ela e interpreta o corpo
+         [(Func? func)
+          (let ([func-env (make-env)])
+            ;; Passa o argumento para o parâmetro da função no novo ambiente
+            (env-set! func-env (first (Func-params func)) arg)
+            (interpret (Func-body func) func-env))]
 
-    [else (error "Expressão inválida:" expr)]))
+         ;; Funções nativas hardcoded, aqui só temos print
+         [(case func
+            [(PrintNym) #t]
+            [else #f])
+          (begin (display arg) (newline) 'ok)]
 
-;; =========================
-;; Criando uma função soma
-;; =========================
-(define soma-func
-  (func 'soma '(a b)
-    '(+ a b)))
+         ;; Se não é função nem função nativa, erro
+         [else (error "Chamada a algo que não é função:" func)]))]
 
-;; Adiciona função ao ambiente
-(hash-set! env 'soma soma-func)
-
-;; Teste de chamada: (soma 3 4)
-(define resultado
-  (interpret (call 'soma '(3 4)) env))
-
-(displayln (string-append "Resultado da soma: " (number->string resultado)))
+    ;; Qualquer outro tipo de expressão: erro
+    [else (error "Tipo de expressão desconhecido:" expr)]))
