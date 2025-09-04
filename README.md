@@ -65,6 +65,8 @@ Nymbli is a modern language designed with a focus on agility, syntactic simplici
 
  ## 📷 Screenshot
 
+<img width="1903" height="956" alt="image" src="https://github.com/user-attachments/assets/87b73087-170f-46d1-ac6d-77e53c396fb7" />
+
  ## 🤝 Contribution Guidelines
 
 Contributions are welcome, provided they align with the educational and ethical hacking purposes of this project. To contribute:
@@ -83,5 +85,6 @@ This project is licensed under the MIT License.
 
 - Contact the author via [GitHub](https://github.com/Vyzer9)
 
-<img width="361" height="407" alt="image" src="https://github.com/user-attachments/assets/f804f668-32bb-490b-b474-46aba08f8d4a" />
+<img width="350" height="395" alt="image" src="https://github.com/user-attachments/assets/19b0f8b8-e931-4293-ae43-65ef93561c9e" />
+
 
