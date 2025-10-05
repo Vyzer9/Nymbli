@@ -1,3 +1,6 @@
+
+<img width="128" height="128" alt="LogoSemFundo128x128" src="https://github.com/user-attachments/assets/e4eea1c3-f844-4c82-8174-5a44dbb6d7e4" />
+
 #  Nymbli Programming Language
 ![Made with Racket](https://img.shields.io/badge/Made%20with-Racket-red?logo=racket)
 ![Made with Elixir](https://img.shields.io/badge/Made%20with-Elixir-8e44ad?logo=elixir)
@@ -8,9 +11,6 @@
 > This language is released under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).  
 > You are free to use, modify, and distribute the project — including commercially — as long as you comply with the terms.  
 > Comes with no warranty. See [LICENSE](./LICENSE) for details.
-
-
-<img width="128" height="128" alt="LogoSemFundo128x128" src="https://github.com/user-attachments/assets/e4eea1c3-f844-4c82-8174-5a44dbb6d7e4" />
 
 ---
 
